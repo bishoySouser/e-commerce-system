@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductCollection;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Filters\ProductQuery;
 use Illuminate\Http\Request;
 
 class ProductController extends BaseController
@@ -12,40 +14,22 @@ class ProductController extends BaseController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new ProductCollection(Product::all());
+        $filter = new ProductQuery();
+        $queryItems = $filter->transform($request);
+
+        if (count($queryItems) == 0) {
+            $products = Product::paginate();
+        }else {
+            $products = Product::where($queryItems)->paginate();
+        }
+
+        return $this->sendResponse(
+            ProductResource::collection($products),
+            'Products retrieved successfully.'
+        );
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
