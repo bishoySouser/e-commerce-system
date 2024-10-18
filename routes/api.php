@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
@@ -16,4 +17,9 @@ Route::controller(RegisterController::class)->group(function(){
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::get('products', [ProductController::class, 'index']);
+    Route::prefix('orders')->group(function () {
+        Route::post('', [OrderController::class, 'store']);
+        Route::get('/{id}', [OrderController::class, 'show']);
+    });
+    
 });

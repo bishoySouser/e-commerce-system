@@ -29,4 +29,15 @@ class BaseController extends Controller
 
         return response()->json($response, $code);
     }
+
+    /**
+     * Generate a unique cache key based on the request parameters
+     */
+    protected function generateCacheKey(Request $request): string
+    {
+        $queryParams = $request->query();
+        ksort($queryParams); // Sort to ensure consistent cache keys
+        
+        return 'products:' . md5(serialize($queryParams) . $request->query('page', 1));
+    }
 }
