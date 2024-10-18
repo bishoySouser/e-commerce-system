@@ -11,9 +11,8 @@ class OrderService
 {
     public function createOrder($data)
     {
-        DB::beginTransaction();
-
         try {
+            return DB::transaction(function () use ($data) {
                 $total = 0;
                 $orderData = [];
 
@@ -46,6 +45,7 @@ class OrderService
                 event(new OrderPlaced($order));
 
                 return $order;
+            });
             } catch (\Exception $e) {
                 // Rollback transaction if something goes wrong
                 DB::rollBack();

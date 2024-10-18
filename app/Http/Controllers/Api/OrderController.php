@@ -26,7 +26,7 @@ class OrderController extends BaseController
             $order = $this->orderService->createOrder($request->all());
             
             return $this->sendResponse(
-                $order,
+                new OrderResource($order),
                 'Order is being processed.'
             );
         } catch (\Exception $e) {
