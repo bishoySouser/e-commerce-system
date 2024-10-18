@@ -22,10 +22,10 @@
 
 ## functionality
 ### Units
-✓ can transform range price filters
+- can transform range price filters
 
 ### features
-  ✓ authenticated user can create order
-  ✓ unauthenticated user cannot create order
-  ✓ cannot create order with invalid quantity
-  ✓ cannot create order with empty products 
+- authenticated user can create order
+- unauthenticated user cannot create order
+- cannot create order with invalid quantity
+- cannot create order with empty products 
