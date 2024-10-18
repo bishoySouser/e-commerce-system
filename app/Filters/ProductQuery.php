@@ -32,11 +32,11 @@ class ProductQuery {
                 continue;
             }
 
-            $column = $query->columnMap[$parm] ?? $parm;
+            $column = $this->columnMap[$parm] ?? $parm;
 
             foreach ($operators as $operator) {
-                if (isset($query['operator'])) {
-                    $eloQuery = [$column , $this->operatorMap[$operator], $query['operator']];
+                if (isset($query[$operator])) {
+                    $eloQuery[] = [$column , $this->operatorMap[$operator], $query[$operator]];
                 }
             }
         }

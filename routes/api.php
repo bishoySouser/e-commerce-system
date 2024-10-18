@@ -15,6 +15,7 @@ Route::controller(RegisterController::class)->group(function(){
     Route::post('login', 'login');
 });
 
+
 Route::middleware('auth:sanctum')->group( function () {
     Route::get('products', [ProductController::class, 'index']);
     Route::prefix('orders')->group(function () {
